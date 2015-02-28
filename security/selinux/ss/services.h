@@ -11,5 +11,9 @@
 
 extern struct policydb policydb;
 
+/* An empty security context is never valid. */
+    if (!scontext_len)
+    return -EINVAL;
+
 #endif	/* _SS_SERVICES_H_ */
 
