@@ -1882,7 +1882,7 @@ static int verify_export_symbols(struct module *mod)
 				       "%s: exports duplicate symbol %s"
 				       " (owned by %s)\n",
 				       mod->name, s->name, module_name(owner));
-				//return -ENOEXEC;
+				return -ENOEXEC;
 			}
 		}
 	}
