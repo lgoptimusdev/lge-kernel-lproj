@@ -14,13 +14,13 @@ version=3.4.0
 
 if [ -z $target ]; then
     echo "choose your target device"
-    echo "1) l3 ii"
+    echo "1) l7 p705"
     echo "2) l5 e610"
     echo "3) l5 e612"
-    echo "4) l7"
+    echo "4) l7 p700"
     read -p "1/2/3: " choice
     case "$choice" in
-        1 ) export target=e430 ; export defconfig=vee3-rev_11_led_defconfig;;
+        1 ) export target=p705 ; export defconfig=cyanogenmod_u0_nonfc_defconfig;;
         2 ) export target=e610 ; export defconfig=cyanogenmod_m4_defconfig;;
         3 ) export target=e612 ; export defconfig=cyanogenmod_m4_nonfc_defconfig;;
         4 ) export target=p700 ; export defconfig=cyanogenmod_u0_defconfig;;
