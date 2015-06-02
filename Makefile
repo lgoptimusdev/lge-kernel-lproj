@@ -245,8 +245,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
-HOSTCXXFLAGS = -O2
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89
+HOSTCXXFLAGS = -O2 -std=gnu89
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -330,7 +330,7 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-REAL_CC		= $(CROSS_COMPILE)gcc
+CC		= $(CROSS_COMPILE)gcc
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -357,10 +357,6 @@ ARM_FLAGS       = -funswitch-loops \
                   -march=armv7-a \
                   -fvect-cost-model
 
-# Use the wrapper for the compiler.  This wrapper scans for new
-# warnings and causes the build to stop upon encountering them.
-CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
-
 MODFLAGS	=  -mcpu=cortex-a5 -march=armv7-a -mfpu=neon-vfpv4 \
 		   -ffast-math -fsingle-precision-constant -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr \
 		   -fmodulo-sched -fmodulo-sched-allow-regmoves -fno-tree-vectorize
@@ -385,13 +381,16 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
+	           -Wno-array-bounds \
+                   -Wno-maybe-uninitialized \
                    -marm -mfloat-abi=softfp -march=armv7-a \
                    -mfpu=neon -ffast-math -pipe \
                    -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-vectorize \
                    -ftree-vectorize -funsafe-math-optimizations \
                    -fsched-spec-load -mvectorize-with-neon-quad \
+                   -Wno-unused-variable -Wno-unused-function \
                    -fmodulo-sched -fmodulo-sched-allow-regmoves \
-		   -fno-delete-null-pointer-checks $(MODFLAGS)
+		   -fno-delete-null-pointer-checks -std=gnu89 $(MODFLAGS)
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
