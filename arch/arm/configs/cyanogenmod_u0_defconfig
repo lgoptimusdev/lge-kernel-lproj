@@ -3390,7 +3390,7 @@ CONFIG_NLATTR=y
 #
 # LGE platform selection
 #
-CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE=y
+
 #
 # LGE Factory Feature
 #
