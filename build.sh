@@ -17,11 +17,16 @@ rel="R13"
 daytime=$(date +%d"-"%m"-"%Y"_"%H"-"%M)
 location=.
 
-# Colorize and add text parameters
-grn=$(tput setaf 2)             #  Green
+# Prepare output customization commands
+red=$(tput setaf 1)             #  red
+grn=$(tput setaf 2)             #  green
+blu=$(tput setaf 4)             #  blue
+cya=$(tput setaf 6)             #  cyan
 txtbld=$(tput bold)             # Bold
+bldred=${txtbld}$(tput setaf 1) #  red
 bldgrn=${txtbld}$(tput setaf 2) #  green
 bldblu=${txtbld}$(tput setaf 4) #  blue
+bldcya=${txtbld}$(tput setaf 6) #  cyan
 txtrst=$(tput sgr0)             # Reset
 
 
@@ -29,11 +34,11 @@ echo "${bldgrn}Pick variant...${txtrst}"
 select choice in e610 e612
 do
 case "$choice" in
-	"e610")
+	"${bldcya}610${txtrst}")
 		export target="e610"
 		export defconfig="cyanogenmod_m4_defconfig"
 		break;;
-	"e612")
+	"${bldcya612${txtrst}")
 		export target="e612"
 		export defconfig="cyanogenmod_m4_nonfc_defconfig"
 		break;;
@@ -50,12 +55,12 @@ if [ -z "$clean" ]; then
     read -p "${bldgrn}do make clean mrproper?(y/n)${txtrst}" clean
 fi # [ -z "$clean" ]
 case "$clean" in
-    y|Y ) echo "${bldblu}cleaning...${txtrst}"; make clean mrproper;;
-    n|N ) echo "${bldblu}continuing...${txtrst}";;
-    * ) echo "${bldgrn}invalid option${txtrst}"; sleep 2 ; build.sh;;
+    y|Y ) echo "${bldcya}cleaning...${txtrst}"; make clean mrproper;;
+    n|N ) echo "${bldcya}continuing...${txtrst}";;
+    * ) echo "${bldred}invalid option${txtrst}"; sleep 2 ; build.sh;;
 esac
 
-echo "${bldgrn}now building the kernel${txtrst}"
+echo "${grn}now building the kernel${txtrst}"
 
 START=$(date +%s)
 
@@ -66,9 +71,9 @@ make $defconfig
 
 	if [ "$NR_CPUS" -le "2" ]; then
 		NR_CPUS=4;
-		echo "Building kernel with 4 CPU threads";
+		echo "${bldblu}Building kernel with 4 CPU threads${txtrst}";
 	else
-		echo "Building kernel with $NR_CPUS CPU threads";
+		echo "${bldblu}Building kernel with $NR_CPUS CPU threads${txtrst}";
 	fi;
 
 make -j ${NR_CPUS}
@@ -94,10 +99,10 @@ if [ -f arch/arm/boot/zImage ]; then
     rm -f *.zip
     zip -r $zipfile * -x *kernel/.gitignore*
 
-    echo "${bldgrn}zip saved to zip-creator/$zipfile ${txtrst}"
+    echo "${bldblu}zip saved to zip-creator/$zipfile ${txtrst}"
 
 else # [ -f arch/arm/boot/zImage ]
-    echo "${bldgrn} the build failed so a zip won't be created ${txtrst}"
+    echo "${bldred} the build failed so a zip won't be created ${txtrst}"
 fi # [ -f arch/arm/boot/zImage ]
 
 END=$(date +%s)
