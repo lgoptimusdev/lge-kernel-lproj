@@ -7,7 +7,6 @@
 echo "this is an open source script, feel free to use and share it"
 
 # Vars
-export LOCALVERSION=~`echo $VER`
 export ARCH=arm
 export SUBARCH=arm
 export KBUILD_BUILD_USER=aidasaidas75
@@ -40,16 +39,8 @@ case "$choice" in
 esac
 done
 
-if [ -z $compiler ]; then
-    if [ -f ../arm-eabi-4.6/bin/arm-eabi-* ]; then
-        export compiler=../arm-eabi-4.6/bin/arm-eabi-
-    elif [ -f arm-eabi-4.6/bin/arm-eabi-* ]; then # [ -f ../arm-eabi-4.6/bin/arm-eabi-* ]
-        export compiler=arm-eabi-4.6/bin/arm-eabi-
-    else # [ -f arm-eabi-4.6/bin/arm-eabi-* ]
-        echo "${bldgrn}please specify a location, including the '/bin/arm-eabi-' at the end ${txtrst}"
-        read compiler
-    fi # [ -z $compiler ]
-fi # [ -f ../arm-eabi-4.6/bin/arm-eabi-* ]
+echo "${bldgrn}please specify a location, including the '/bin/arm-eabi-' at the end ${txtrst}"
+read compiler
 
 cd $location
 export ARCH=arm
@@ -67,7 +58,7 @@ echo "${bldgrn}now building the kernel${txtrst}"
 
 START=$(date +%s)
 
-make $config
+make $defconfig
 
 	# Check cpu's
 	NR_CPUS=$(grep -c ^processor /proc/cpuinfo)
