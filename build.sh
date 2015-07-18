@@ -34,11 +34,11 @@ echo "${bldgrn}Pick variant...${txtrst}"
 select choice in e610 e612
 do
 case "$choice" in
-	"${bldcya}610${txtrst}")
+	"e610")
 		export target="e610"
 		export defconfig="cyanogenmod_m4_defconfig"
 		break;;
-	"${bldcya612${txtrst}")
+	"e612")
 		export target="e612"
 		export defconfig="cyanogenmod_m4_nonfc_defconfig"
 		break;;
@@ -112,3 +112,6 @@ B_SEC=$((BUILDTIME - E_MIN * 60))
 echo -ne "\033[32mBuildtime: "
 [ $B_MIN != 0 ] && echo -ne "$B_MIN min(s) "
 echo -e "$B_SEC sec(s)\033[0m"
+
+read -p "Press [Enter] key to exit..."
+exit
